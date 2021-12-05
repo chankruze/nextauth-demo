@@ -6,10 +6,14 @@ Copyright (c) Geekofia 2021 and beyond
 */
 
 import NextAuth from "next-auth";
+// providers
 import GitHubProvider from "next-auth/providers/github";
+import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
+// adapters
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
+// custom functions
 import sendVerificationReq from "../../../lib/sendVerificationReq";
 
 export default NextAuth({
@@ -21,6 +25,11 @@ export default NextAuth({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
         }),
+        DiscordProvider({
+            clientId: process.env.DISCORD_CLIENT_ID,
+            clientSecret: process.env.DISCORD_CLIENT_SECRET,
+        }),
+        // Email provider
         EmailProvider({
             server: {
                 host: process.env.EMAIL_SERVER_HOST,
