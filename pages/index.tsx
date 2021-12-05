@@ -26,9 +26,18 @@ const Home = () => {
                 p-4 rounded drop-shadow-md justify-center items-center"
             >
                 <p className="text-sm p-2">Signed in as</p>
-                <p className="text-2xl p-2">
-                    {session && session.user && session.user.name}
-                </p>
+                <div className="text-2xl p-2 text-center">
+                    {session && session.user && (
+                        <img
+                            src={session.user.image}
+                            alt="profile pic"
+                            className="rounded-[50%] w-60 h-60"
+                        />
+                    )}
+                    <p className="pt-4">
+                        {session && session.user && session.user.name}
+                    </p>
+                </div>
                 <button
                     className="bg-red-500 text-white py-2 px-4 mt-6 rounded"
                     onClick={() => signOut()}
