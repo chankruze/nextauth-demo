@@ -5,12 +5,19 @@ Created: Mon Nov 22 2021 19:45:52 GMT+0530 (India Standard Time)
 Copyright (c) Geekofia 2021 and beyond
 */
 
+import { IncomingMessage } from "http";
+import { NextApiResponse } from "next";
+import { Provider } from "next-auth/providers";
 import { getProviders, getSession } from "next-auth/react";
 import Link from "next/link";
 import Layout from "../components/modules/Layout";
 import ProviderLoginButton from "../components/modules/ProviderLoginButton";
 
-const SignIn = ({ providers }) => {
+interface Props {
+    providers: Provider[];
+}
+
+const SignIn = ({ providers }: Props) => {
     // const { data: session } = useSession();
     // if (session)
 
@@ -95,7 +102,7 @@ const SignIn = ({ providers }) => {
                 </div>
                 {/* render provider login buttons */}
                 {providers &&
-                    Object.keys(providers).map((key, _idx) => (
+                    Object.keys(providers).map((key: any, _idx) => (
                         <div className="py-2 px-4" key={_idx}>
                             <ProviderLoginButton
                                 provider={providers[key]}
@@ -108,7 +115,13 @@ const SignIn = ({ providers }) => {
     );
 };
 
-SignIn.getInitialProps = async ({ req, res }) => {
+SignIn.getInitialProps = async ({
+    req,
+    res,
+}: {
+    req: IncomingMessage;
+    res: NextApiResponse;
+}) => {
     // get session info
     const session = await getSession({ req });
     // use session.accessToken also (jwt)(custom server)
